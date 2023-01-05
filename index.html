@@ -8,22 +8,20 @@
     <title>Quiz</title>
 </head>
 <body>
-    <div class="geography-quiz">
-    <div class="title">
-        <h1>Quiz</h1>
-    </div>
     <div class="quiz-box">
-        <div class="question-section" id="question">Question</div>
-        <div class="option-section">
-            <button class="option" id="option1">option1</button>
-            <button class="option" id="option2">option2</button>
-            <button class="option" id="option3">option3</button>
-            <button class="option" id="option4">option4</button>
+        <div id="question-section" class="hide">
+            <div id="question">Question</div>
+            <div id="option-section" class="btn-grid">
+                <button type="button" class="btn">option 1</button>
+                <button type="button" class="btn">option 2</button>
+                <button type="button" class="btn">option 3</button>
+                <button type="button" class="btn">option 4</button>
+            </div>
         </div>
-        <div class="navigation">
-            <button class="next">Next</button>
+        <div class="controls">
+            <div id="start-btn"><button class="btn">Start</button></div>
+            <div id="next-btn" class="hide"><button class="btn">Next</button></div>
         </div>
-    </div>
     </div>
     <script src="script.js"></script>
 </body>

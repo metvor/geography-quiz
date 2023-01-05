@@ -1,48 +1,109 @@
-    const questions = [{
-        id:0,
-        title: 'Where is Budapest?',
-        alternatives: [
-        {text:'Czech Republic', isCorrect:false},
-        {text:'Slovakia', isCorrect:false},
-        {text:'Hungary', isCorrect:true},
-        {text:'Bulgaria', isCorrect:false},
-    ]},{
-        id:1,
-        title: 'Which US states borders Illinois?',
-        alternatives: [
-        {text:'Kentucky', isCorrect:true},
-        {text:'Tennessee', isCorrect:false},
-        {text:'Ohio', isCorrect:false},
-        {text:'South Dakota', isCorrect:false},
-    ]},{
+const startButton = document.getElementById('start-btn')
+const quizBox = document.getElementById('question-section')
+const nextButton = document.getElementById('next-btn')
+const questionElement = document.getElementById('question')
+const answerOption = document.getElementById('option-section')
 
+let shuffleQuestions, currentIndex
+
+startButton.addEventListener('click', startQuiz)
+nextButton.addEventListener('click', () => {
+    currentIndex++
+    nextQuestion()
+})
+
+function startQuiz() {
+    startButton.classList.add('hide')
+    quizBox.classList.remove('hide')
+nextButton.classList.remove('hide')
+shuffleQuestions = questions.sort(() => Math.random() - .5)
+currentIndex = 0
+nextQuestion()
+}
+
+function nextQuestion() { 
+    resetState()
+    showQuestion(shuffleQuestions[currentIndex]) 
+}
+
+function showQuestion(question) {
+    questionElement.innerText = question.question
+    question.answers.forEach(answer => {
+        const button = document.createElement('button')
+        button.innerText = answer.text
+        button.classList.add('btn')
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener('click', selectAnswer)
+        answerOption.appendChild(button)
+    })
+}
+
+function resetState() {
+    nextButton.classList.add('hide')
+    while (answerOption.firstChild) {
+        answerOption.removeChild
+        (answerOption.firstChild)
     }
+}
+
+function selectAnswer(e) {
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct
+    setStatusClass(document.body, correct)
+    Array.from(answerOption.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+    if (shuffleQuestions.length > currentIndex +1) {
+        nextButton.classList.remove('hide')
+    } else {
+        startButton.innerText = 'Restart'
+        startButton.classList.remove('hide')
+    }
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element) 
+    if (correct) {
+        element.classList.add('correct')
+    } else {
+        element.classList.add('wrong')
+    }
+}
+
+function clearStatusClass(element) {
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
+}
+
+const questions = [
+    {
+        question: 'What is the capital of Austria?',
+        answers: [
+            {text: 'Prague', correct: false},
+            {text: 'Vienna', correct: true},
+            {text: 'Salzburg', correct: false},
+            {text: 'Budapest', correct: false},
+        ]
+    },
+    {
+        question: 'What is the capital of Australia?',
+        answers: [
+            {text: 'Sydney', correct: false},
+            {text: 'Perth', correct: false},
+            {text: 'Canberra', correct: true},
+            {text: 'Melbourne', correct: false},
+        ]
+    },
+    {
+        question: 'What is the capital of Peru?',
+        answers: [
+            {text: 'Lima', correct: true},
+            {text: 'La Paz', correct: false},
+            {text: 'Santiago', correct: false},
+            {text: 'Cali', correct: false},
+        ]
+    },
+
 ]
-
-var start = true;
-
-    function iterate(id) {
-        const question=document.getElementById('question');
-        question.innerText=questions[id].title;
-
-        const op1 = document.getElementById('option1');
-        const op2 = document.getElementById('option2');
-        const op3 = document.getElementById('option3');
-        const op4 = document.getElementById('option4');
-
-        op1.innerText = questions[id].alternatives[0].text;
-        op2.innerText = questions[id].alternatives[1].text;
-        op3.innerText = questions[id].alternatives[2].text;
-        op4.innerText = questions[id].alternatives[3].text;
-
-        op1.value = questions[id].alternatives[0].isCorrect;
-        op2.value = questions[id].alternatives[1].isCorrect;
-        op3.value = questions[id].alternatives[2].isCorrect;
-        op4.value = questions[id].alternatives[3].isCorrect;
-
-    }
-
-    if (start) {
-        iterate('0');
-    }
-   
