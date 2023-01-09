@@ -58,8 +58,8 @@ function selectAnswer(e) {
     if (shuffleQuestions.length > currentIndex +1) {
         nextButton.classList.remove('hide')
     } else {
-        startButton.innerText = 'Restart'
         startButton.classList.remove('hide')
+        startButton.innerText = 'Restart quiz'
     }
 }
 
